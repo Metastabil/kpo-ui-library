@@ -21,6 +21,31 @@ function displayNotification(params) {
 
 function displayPopup(params) {
     const randomHash = generateRandomHash();
+    const htmlOverlay = `
+        <div class="kpo-popup-overlay kpo-popup-overlay-${randomHash}"></div>
+    `;
+    const htmlPopup = `
+        <div class="kpo-popup kpo-popup-${randomHash}" style="height: ${params['height'] || ''}; width: ${params['width'] || ''};">
+            <div class="kpo-popup-title">${params['title'] || ''}</div>
+            <div class="kpo-popup-content">${params['content'] || ''}</div>
+        </div>
+    `;
+
+    $('body').append(htmlOverlay);
+    $('body').append(htmlPopup);
+
+    const overlayElement = $(`.kpo-popup-overlay-${randomHash}`);
+    const popupElement = $(`.kpo-popup-${randomHash}`);
+
+    overlayElement.fadeIn(250);
+    popupElement.fadeIn(250)
+
+    $(document).on('mouseup', (e) => {
+        if (!popupElement.is(e.target) && popupElement.has(e.target).length === 0) {
+            popupElement.fadeOut(250)
+            overlayElement.fadeOut(250);
+        }
+    })
 }
 
 function generateRandomHash() {

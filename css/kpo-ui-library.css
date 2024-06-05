@@ -1,5 +1,6 @@
 .kpo-notification {
     position: fixed;
+    display: none;
     bottom: 10px;
     right: 10px;
 }
@@ -21,4 +22,42 @@
     box-shadow: 0 0 10px #333333;
     border-radius: 15px;
     padding: 25px 50px;
+}
+
+/*
+ * Popup
+ */
+.kpo-popup-overlay {
+    background-color: rgba(255, 255, 255, .8);
+    position: fixed;
+    display: none;
+    height: 100vh;
+    z-index: 999;
+    width: 100vw;
+    left: 0;
+    top: 0;
+}
+
+.kpo-popup {
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px #333333;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    left: 50%;
+    top: 50%;
+}
+
+.kpo-popup-title {
+    border-bottom: 1px solid #C0C0C0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 35px;
+    padding: 10px;
+}
+
+.kpo-popup-content {
+    padding: 10px;
 }
