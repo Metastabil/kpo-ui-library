@@ -61,3 +61,41 @@
 .kpo-popup-content {
     padding: 10px;
 }
+
+/*
+ * Loading Circle
+ */
+.kpo-loading-circle-overlay {
+    background-color: rgba(255, 255, 255, .8);
+    position: fixed;
+    display: none;
+    height: 100vh;
+    z-index: 999;
+    width: 100vw;
+    left: 0;
+    top: 0;
+}
+
+.kpo-loading-circle-wrapper {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 9999;
+    left: 50%;
+    top: 50%;
+}
+
+.kpo-loading-circle {
+    animation: kpo-spin 2s linear infinite;
+    border-bottom: 12px solid #333333;
+    border-right: 12px solid #333333;
+    border-left: 12px solid #333333;
+    border-top: 12px solid  #E97777;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    height: 80px;
+}
+
+@keyframes kpo-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

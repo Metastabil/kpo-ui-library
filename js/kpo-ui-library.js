@@ -48,6 +48,27 @@ function displayPopup(params) {
     })
 }
 
+function displayLoadingCircle() {
+    const randomHash = generateRandomHash();
+    const htmlOverlay = `
+        <div class="kpo-loading-circle-overlay kpo-loading-circle-overlay-${randomHash}"></div>
+    `;
+    const htmlCircle = `
+        <div class="kpo-loading-circle-wrapper kpo-loading-circle-wrapper-${randomHash}">
+            <div class="kpo-loading-circle kpo-loading-circle-${randomHash}"></div>
+        </div>
+    `;
+
+    $('body').append(htmlOverlay);
+    $('body').append(htmlCircle);
+
+    const overlayElement = $(`.kpo-loading-circle-overlay-${randomHash}`);
+    const circleElement = $(`.kpo-loading-circle-${randomHash}`);
+
+    overlayElement.fadeIn(250);
+    circleElement.fadeIn(250);
+}
+
 function generateRandomHash() {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
