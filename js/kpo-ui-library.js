@@ -1,14 +1,22 @@
-function displayNotification(params) {
+/**
+ * Displays a notification in the bottom right corner
+ * @param {String} type
+ * @param {String} text
+ * @param {Number} displayTime
+ */
+function displayNotification({ type, text, displayTime }) {
+
     const randomHash = generateRandomHash();
+    const notificationClass = `kpo-notification-${randomHash}`;
     const html = `
-        <div class="kpo-notification kpo-notification-${params['type']} kpo-notification-${randomHash}">
-            <p class="kpo-notification-text">${params['text']}</p>
+        <div class="kpo-notification kpo-notification-${type} ${notificationClass}">
+            <p class="kpo-notification-text">${text}</p>
         </div>
     `;
 
     $('body').append(html);
 
-    const element = $(`.kpo-notification-${randomHash}`);
+    const element = $(`.${notificationClass}`);
 
     element.fadeIn(250);
 
@@ -16,8 +24,49 @@ function displayNotification(params) {
         element.fadeOut(250, () => {
             element.remove();
         });
-    }, params['displayTime'])
+    }, displayTime);
 }
+
+/**
+ * Displays a rotating loading circle and also an overlay that
+ * blocks all elements on the side
+ * @returns {string}
+ */
+function displayLoadingCircle() {
+    const randomHash = generateRandomHash();
+    const overlayClass = `kpo-loading-circle-overlay-${randomHash}`;
+    const wrapperClass = `kpo-loading-circle-wrapper-${randomHash}`;
+    const circleClass = `kpo-loading-circle-${randomHash}`;
+
+    const html = `
+        <div class="kpo-loading-circle-overlay ${overlayClass}">
+            <div class="kpo-loading-circle-wrapper ${wrapperClass}">
+                <div class="kpo-loading-circle ${circleClass}"></div>
+            </div>
+        </div>
+    `;
+
+    $('body').append(html);
+
+    const element = $(`.${overlayClass}`);
+
+    element.fadeIn(250);
+
+    return randomHash;
+}
+
+/**
+ * Removes an existing loading circle
+ * @param {String} randomHash
+ */
+function hideLoadingCircle(randomHash) {
+    const element = $(`.kpo-loading-circle-overlay-${randomHash}`);
+
+    element.fadeOut(250, () => {
+        element.remove();
+    });
+}
+
 
 function displayPopup(params) {
     const randomHash = generateRandomHash();
@@ -48,27 +97,10 @@ function displayPopup(params) {
     })
 }
 
-function displayLoadingCircle() {
-    const randomHash = generateRandomHash();
-    const htmlOverlay = `
-        <div class="kpo-loading-circle-overlay kpo-loading-circle-overlay-${randomHash}"></div>
-    `;
-    const htmlCircle = `
-        <div class="kpo-loading-circle-wrapper kpo-loading-circle-wrapper-${randomHash}">
-            <div class="kpo-loading-circle kpo-loading-circle-${randomHash}"></div>
-        </div>
-    `;
-
-    $('body').append(htmlOverlay);
-    $('body').append(htmlCircle);
-
-    const overlayElement = $(`.kpo-loading-circle-overlay-${randomHash}`);
-    const circleElement = $(`.kpo-loading-circle-${randomHash}`);
-
-    overlayElement.fadeIn(250);
-    circleElement.fadeIn(250);
-}
-
+/**
+ * Generates and returns a random hash
+ * @returns {string}
+ */
 function generateRandomHash() {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
