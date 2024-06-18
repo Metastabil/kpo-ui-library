@@ -1,7 +1,3 @@
-:root {
-
-}
-
 .kpo-notification {
     position: fixed;
     display: none;
@@ -49,17 +45,35 @@
     border-radius: 5px;
     position: absolute;
     z-index: 9999;
-    display: none;
     left: 50%;
     top: 50%;
 }
 
 .kpo-popup-title {
     border-bottom: 1px solid #C0C0C0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     text-align: center;
     font-weight: bold;
     font-size: 35px;
+    display: flex;
     padding: 10px;
+}
+
+.kpo-popup-close {
+    margin-left: auto;
+    font-size: 20px;
+    color: #FF9F9F;
+}
+
+.kpo-popup-close:hover {
+    color: #E97777;
+}
+
+.kpo-popup-close:active {
+    position: relative;
+    top: 1px;
 }
 
 .kpo-popup-content {

@@ -30,7 +30,7 @@ function displayNotification({ type, text, displayTime }) {
 /**
  * Displays a rotating loading circle and also an overlay that
  * blocks all elements on the side
- * @returns {string}
+ * @returns {String}
  */
 function displayLoadingCircle() {
     const randomHash = generateRandomHash();
@@ -67,33 +67,48 @@ function hideLoadingCircle(randomHash) {
     });
 }
 
-
-function displayPopup(params) {
+/**
+ * Displays a popup window
+ * @param {String} height
+ * @param {String} width
+ * @param {String} title
+ * @param {String} content
+ */
+function displayPopup({ height, width, title = '', content = ''}) {
     const randomHash = generateRandomHash();
-    const htmlOverlay = `
-        <div class="kpo-popup-overlay kpo-popup-overlay-${randomHash}"></div>
-    `;
-    const htmlPopup = `
-        <div class="kpo-popup kpo-popup-${randomHash}" style="height: ${params['height'] || ''}; width: ${params['width'] || ''};">
-            <div class="kpo-popup-title">${params['title'] || ''}</div>
-            <div class="kpo-popup-content">${params['content'] || ''}</div>
+    const html = `
+        <div class="kpo-popup-overlay kpo-popup-overlay-${randomHash}">
+            <div class="kpo-popup kpo-popup-${randomHash}" style="height: ${height || ''}; width: ${width || ''};">
+                <div class="kpo-popup-title">
+                    ${title || ''}
+                    <a href="javascript:void(0)" class="kpo-popup-close">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </a>
+                </div>
+                <div class="kpo-popup-content">${content || ''}</div>
+            </div>
         </div>
     `;
 
-    $('body').append(htmlOverlay);
-    $('body').append(htmlPopup);
+    $('body').append(html);
 
-    const overlayElement = $(`.kpo-popup-overlay-${randomHash}`);
-    const popupElement = $(`.kpo-popup-${randomHash}`);
+    const element = $(`.kpo-popup-overlay-${randomHash}`);
+    const popup = $(`.kpo-popup-${randomHash}`);
 
-    overlayElement.fadeIn(250);
-    popupElement.fadeIn(250)
+    element.fadeIn(250);
 
     $(document).on('mouseup', (e) => {
-        if (!popupElement.is(e.target) && popupElement.has(e.target).length === 0) {
-            popupElement.fadeOut(250)
-            overlayElement.fadeOut(250);
+        if (!popup.is(e.target) && popup.has(e.target).length === 0) {
+            element.fadeOut(250, () => {
+                element.remove()
+            });
         }
+    });
+
+    $('.kpo-popup-close').on('click', (e) => {
+        element.fadeOut(250, () => {
+            element.remove();
+        });
     })
 }
 
